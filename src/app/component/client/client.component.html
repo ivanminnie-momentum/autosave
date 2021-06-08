@@ -1,0 +1,19 @@
+<form class="center-align" [formGroup]="clientForm">
+    <div class="row-layout">
+      <mat-form-field>
+        <input autofocus matInput formControlName="name" placeholder="Name" type="text" required/>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput formControlName="preferredName" placeholder="Preferred Name" type="text"/>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput formControlName="surname" placeholder="Surname" type="text" required/>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput formControlName="idNumber" maxlength="13" placeholder="ID number" type="text" required/>
+        <mat-error *ngIf="this.clientForm.controls.idNumber.hasError('idNumberInvalid')">
+          Invalid ID number
+        </mat-error>
+      </mat-form-field>
+    </div>
+</form>

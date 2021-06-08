@@ -1,0 +1,31 @@
+import { Injectable } from '@angular/core';
+import {Client} from "../domain/client";
+import {Adviser} from "../domain/adviser";
+import {Observable, of, throwError, timer} from "rxjs";
+import {delay, mergeMap} from "rxjs/operators";
+
+@Injectable({
+  providedIn: 'root'
+})
+export class AdviserService {
+
+  constructor() { }
+
+  public saveAdviser(adviser: Adviser): Observable<Adviser | Error> {
+    console.log('adviser saved to service');
+    console.log(adviser);
+
+
+    if (adviser.name.length > 0){
+      return of(adviser).pipe(delay(2000));
+    } else {
+      let error: Observable<Error> = throwError(new Error('Back end needs name to be set.'));
+
+      return timer(5000).pipe(mergeMap(e => error));
+    }
+
+
+    //return Observable.throw(new Error('ivan error')).pipe(delay(2000));// of(client).pipe(delay(2000));
+    //return of(client).pipe(delay(3000));
+  }
+}

@@ -1,0 +1,9 @@
+<h1 mat-dialog-title>Save</h1>
+<div mat-dialog-content>
+  <p>Do you want to navigate away from this page ?
+    If you navigate away from the page your current information will be lost.Please complete the page to save</p>
+</div>
+<div mat-dialog-actions>
+  <button mat-button [mat-dialog-close]="cancelOption" cdkFocusInitial>Cancel</button>
+  <button mat-button [mat-dialog-close]="navigateOption">Discard</button>
+</div>

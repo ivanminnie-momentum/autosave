@@ -1,0 +1,9 @@
+.navigation-button {
+  display: flex; /* or inline-flex */
+  margin-left: 10px;
+}
+.navigation-heading {
+  display: flex; /* or inline-flex */
+  flex-direction: row;
+  justify-content: center;
+}

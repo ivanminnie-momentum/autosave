@@ -1,0 +1,13 @@
+<mat-toolbar color="primary">
+  <mat-toolbar-row class="navigation-heading">
+    <h1 style="font-size: 45px">Do something App</h1>
+  </mat-toolbar-row>
+  <mat-toolbar-row>
+    <button class="navigation-button" mat-raised-button color="accent" routerLink="/client">Client</button>
+    <button class="navigation-button" mat-raised-button color="accent" routerLink="/adviser">Adviser</button>
+  </mat-toolbar-row>
+</mat-toolbar>
+
+<div [@routerTransition]="prepareRoute(outlet)">
+  <router-outlet #outlet="outlet"></router-outlet>
+</div>
