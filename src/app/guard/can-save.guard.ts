@@ -37,6 +37,7 @@ export class CanSaveGuard implements CanActivate, CanDeactivate<unknown> {
     currentState: RouterStateSnapshot,
     nextState?: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
 
+    // Instance off ? type of interface ??
     // @ts-ignore
     if (typeof component.canSave === 'function'){
       // @ts-ignore
