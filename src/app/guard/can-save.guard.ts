@@ -50,7 +50,6 @@ export class CanSaveGuard implements CanActivate, CanDeactivate<unknown> {
       return true;
     }
 
-    return true;
   }
 
 }
