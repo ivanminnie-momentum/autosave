@@ -1,6 +1,6 @@
 import {Component, HostListener} from '@angular/core';
 import {ActivatedRoute, ActivatedRouteSnapshot, Router, RouterOutlet} from "@angular/router";
-import {animate, animateChild, group, query, state, style, transition, trigger} from "@angular/animations";
+import {animate, animateChild, group, keyframes, query, state, style, transition, trigger} from "@angular/animations";
 /*
 window.addEventListener('beforeunload', (event) => {
   event.returnValue = `Changes you have made might not be saved ?`;
@@ -71,6 +71,56 @@ trigger('routeAnimations', [
   ])
 ]);
 
+export const slideInOutAnimations =
+  // trigger name for attaching this animation to an element using the [@triggerName] syntax
+  trigger('slideInOutAnimation', [
+
+    // end state styles for route container (host)
+    state('*', style({
+      // the view covers the whole screen with a semi tranparent background
+      position: 'fixed',
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      backgroundColor: 'rgba(0, 0, 0, 0.8)'
+    })),
+
+    // route 'enter' transition
+    transition(':enter', [
+
+      // styles at start of transition
+      style({
+        // start with the content positioned off the right of the screen,
+        // -400% is required instead of -100% because the negative position adds to the width of the element
+        right: '-400%',
+        // start with background opacity set to 0 (invisible)
+        backgroundColor: 'rgba(0, 0, 0, 0)'
+      }),
+
+      // animation and styles at end of transition
+      animate('.5s ease-in-out', style({
+        // transition the right position to 0 which slides the content into view
+        right: 0,
+
+        // transition the background opacity to 0.8 to fade it in
+        backgroundColor: 'rgba(0, 0, 0, 0.8)'
+      }))
+    ]),
+
+    // route 'leave' transition
+    transition(':leave', [
+      // animation and styles at end of transition
+      animate('.5s ease-in-out', style({
+        // transition the right position to -400% which slides the content out of view
+        right: '-400%',
+
+        // transition the background opacity to 0 to fade it out
+        backgroundColor: 'rgba(0, 0, 0, 0)'
+      }))
+    ])
+  ]);
+
 export const slideInOutAnimation =
   // trigger name for attaching this animation to an element using the [@triggerName] syntax
   trigger('routeAnimations', [
@@ -131,9 +181,62 @@ export const routerTransition = trigger('routerTransition', [
   ])
 ]);
 
+const optional = { optional: true };
+
+
+export const fader =
+  trigger('routeAnimations', [
+    transition('* <=> *', [
+      query(':enter, :leave', [
+        style({
+          position: 'absolute',
+          left: 0,
+          width: '100%',
+          opacity: 0,
+          transform: 'scale(0) translateY(100%)'
+        })
+      ], { optional: true }),
+      query(':enter', [
+        animate('500ms ease', style({
+          opacity: 1, transform: 'scale(1) translateY(0)'
+        })),
+      ], { optional: true })
+    ])
+  ]);
+
+export const stepper =
+  trigger('routeAnimations', [
+    transition('* <=> *', [
+      query(':enter, :leave', [
+        style({
+          position: 'absolute',
+          left: 0,
+          width: '100%',
+        }),
+      ],optional),
+      group([
+        query(':enter', [
+          animate('1000ms ease', keyframes([
+            style({ transform: 'scale(0) translateX(100%)', offset: 0 }),
+            style({ transform: 'scale(0.5) translateX(25%)', offset: 0.3 }),
+            style({ transform: 'scale(1) translateX(0%)', offset: 1 }),
+          ])),
+        ],optional),
+        query(':leave', [
+          animate('1000ms ease', keyframes([
+            style({ transform: 'scale(1)', offset: 0 }),
+            style({ transform: 'scale(0.5) translateX(-25%) rotate(0)', offset: 0.35 }),
+            style({ opacity: 0, transform: 'translateX(-50%) rotate(-180deg) scale(6)', offset: 1 }),
+          ])),
+        ],optional)
+      ]),
+    ])
+
+  ]);
+
 @Component({
   selector: 'app-root',
-  animations: [routerTransition],
+  animations: [fader],//[routerTransition],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
   providers: []
@@ -149,7 +252,7 @@ export class AppComponent {
   }
 
   prepareRoute(outlet: RouterOutlet) {
-    return outlet && outlet.activatedRouteData && outlet.activatedRouteData.animation;
+    return outlet && outlet.activatedRouteData && outlet.activatedRouteData['animation'];
   }
 
   @HostListener('window:beforeunload', ['$event'])

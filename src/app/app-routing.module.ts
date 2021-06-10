@@ -5,8 +5,8 @@ import {AdviserComponent} from "./component/adviser/adviser.component";
 import {CanSaveGuard} from "./guard/can-save.guard";
 
 export const routes: Routes = [
-  {path: 'client', component: ClientComponent, data: {animation: 'open'},canDeactivate: [CanSaveGuard]},
-  {path: 'adviser', component: AdviserComponent, data: {animation: 'closed'}, canDeactivate: [CanSaveGuard]},
+  {path: 'client', component: ClientComponent, data: {animation: 'HomePage'},canDeactivate: [CanSaveGuard]},
+  {path: 'adviser', component: AdviserComponent, canDeactivate: [CanSaveGuard]},
   { path: '',   redirectTo: '/client', pathMatch: 'full' }
 ];
 
