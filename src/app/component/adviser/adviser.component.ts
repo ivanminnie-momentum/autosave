@@ -1,14 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {IdNumberValidator} from "../../validator/id-number-validator";
-import {ClientService} from "../../service/client.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
-import {Client} from "../../domain/client";
 import {Adviser} from "../../domain/adviser";
 import {debounceTime, filter, map} from "rxjs/operators";
 import {SaveIndicatorComponent} from "../save-indicator/save-indicator.component";
 import {AdviserService} from "../../service/adviser.service";
-import {SaveDialogComponent} from "../save-dialog/save-dialog.component";
 import {MatDialog} from "@angular/material/dialog";
 import {ErrorDialogComponent} from "../error-dialog/error-dialog.component";
 import {SaveAble} from "../../domain/save-able";
@@ -39,8 +36,7 @@ export class AdviserComponent implements OnInit,SaveAble {
         this.adviser.idNumber = value.idNumber;
         return this.adviser;
       })
-    )
-      .subscribe((value:Adviser) => {
+    ).subscribe((value:Adviser) => {
         this.snackBar.openFromComponent(SaveIndicatorComponent, {
           data: 'Saving adviser'
         });
@@ -63,9 +59,7 @@ export class AdviserComponent implements OnInit,SaveAble {
 
   canSave(): boolean {
     if(!(this.adviserForm.status === "VALID" ) && !this.adviserForm.pristine){
-      this.adviserForm.updateValueAndValidity();
       this.adviserForm.markAllAsTouched();
-      console.log('force validations....');
       return false;
     } else {
       return true;

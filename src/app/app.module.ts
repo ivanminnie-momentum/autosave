@@ -1,6 +1,5 @@
 import {CUSTOM_ELEMENTS_SCHEMA, NgModule} from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import {BrowserAnimationsModule, NoopAnimationsModule} from '@angular/platform-browser/animations';
@@ -48,6 +47,5 @@ import { ErrorDialogComponent } from './component/error-dialog/error-dialog.comp
 export class AppModule {
 
   constructor() {
-
   }
 }
