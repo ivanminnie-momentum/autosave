@@ -56,7 +56,7 @@ export const stepper =
 
 @Component({
   selector: 'app-root',
-  animations: [fader, stepper],//[routerTransition],
+  animations: [fader],//[routerTransition],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
   providers: []
